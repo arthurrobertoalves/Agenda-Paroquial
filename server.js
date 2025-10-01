@@ -9,7 +9,7 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars')
 app.set('views', './views');
 
-
+app.use(express.static('./css'));
 app.use(express.urlencoded());
 
 const conexao = mysql.createConnection({
