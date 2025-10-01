@@ -1,13 +1,24 @@
 const express = require('express')
 const mysql = require('mysql2')
+const session = require('express-session')
+const bcrypt = require('bcryptjs')
 const app = express()
 
+
 const { engine } = require('express-handlebars')
+
 
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars')
 app.set('views', './views');
+
+app.use(session({
+    secret: 'SEGREDO_DE_SESSAO_AQUI_SIMPLES',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+}));
 
 app.use(express.static('./css'));
 app.use(express.urlencoded());
@@ -29,19 +40,31 @@ app.get('/', function (req, res) {
 })
 
 app.post('/cadastro', function (req, res) {
-    let usuario = req.body.usuarios
-    let senha = req.body.senha
-    console.log(usuario, senha)
-    let sql = `INSERT INTO usuarios (usuarios, senha) VALUES (?, ?)`;
+    let usuario = req.body.usuarios;
+    let senha = req.body.senha; 
+    let paroquia_id = req.body.paroquia_id;
 
-    conexao.query(sql, [usuario, senha], function (erro, retorno) {
-        if (erro) throw erro;
-        console.log('Usuário cadastrado com sucesso:', retorno);
-        res.end()
+    bcrypt.genSalt(10, (err, salt) => {
+        if (err) throw err;
+        
+        bcrypt.hash(senha, salt, (err, hash) => {
+            if (err) throw err;
+            
+            const senhaCriptografada = hash;
+            
+            let sql = `INSERT INTO usuarios (usuarios, senha, paroquia_id) VALUES (?, ?, ?)`;
+            
+            conexao.query(sql, [usuario, senhaCriptografada, paroquia_id], function (erro, retorno) {
+                if (erro) {
+                    console.error('Erro ao cadastrar usuário:', erro);
+                    return res.status(500).send('Erro ao cadastrar. Tente novamente.');
+                }
+                console.log('Usuário cadastrado com sucesso:', retorno);
+                res.redirect('/login');
+            });
+        });
     });
-
-
-})
+});
 
 app.listen(1818, () => {
     console.log('http://localhost:1818')
