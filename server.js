@@ -16,7 +16,7 @@ const conexao = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'usuarios'
+    database: 'agendaparoquial'
 })
 
 conexao.connect(function (erro, retorno) {
