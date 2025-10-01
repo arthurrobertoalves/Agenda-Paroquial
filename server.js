@@ -2,7 +2,13 @@ const express = require('express')
 const mysql = require('mysql2')
 const app = express()
 
-const {engine} = require('express-handlebars')
+const { engine } = require('express-handlebars')
+
+
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars')
+app.set('views', './views');
+
 
 app.use(express.urlencoded());
 
@@ -10,12 +16,12 @@ const conexao = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'agenda'
+    database: 'usuarios'
 })
 
 conexao.connect(function (erro, retorno) {
-  if (erro) throw erro;
-  console.log("Conexão concluida com sucesso!")
+    if (erro) throw erro;
+    console.log("Conexão concluida com sucesso!")
 });
 
 app.get('/', function (req, res) {
@@ -26,9 +32,9 @@ app.post('/cadastro', function (req, res) {
     let usuario = req.body.usuarios
     let senha = req.body.senha
     console.log(usuario, senha)
-let sql = `INSERT INTO usuarios (usuarios, senha) VALUES (?, ?)`;
+    let sql = `INSERT INTO usuarios (usuarios, senha) VALUES (?, ?)`;
 
-    conexao.query(sql, [usuario, senha], function(erro, retorno) {
+    conexao.query(sql, [usuario, senha], function (erro, retorno) {
         if (erro) throw erro;
         console.log('Usuário cadastrado com sucesso:', retorno);
         res.end()
