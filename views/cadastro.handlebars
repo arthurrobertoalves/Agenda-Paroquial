@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cadastro.css">
 </head>
+
 <body>
     <h1>
         <strong>
-            Agenda
+            cadastro
         </strong>
     </h1>
 
-    <div id="forms">
-        <form action="/cadastro" method="post">
-            <label for="user">Usuário:</label><br><br>
-            <input type="text" id="user"><br><br>
-            <label for="password">Senha:</label><br><br>
-            <input type="password" id="password"><br><br>
+    <form action="/cadastro" method="POST">
+        <input type="text" name="usuarios" placeholder="Nome de Usuário" required>
 
-        </form>
-    </div>
+        <input type="password" name="senha" placeholder="Senha" required>
+
+          <label for="paroquia_id">Selecione a Paróquia:</label>
+    <select name="paroquia_id" id="paroquia_id" required>
+        <option value="" disabled selected>--- Escolha uma Paróquia ---</option>
+        
+        <option value="Paróquia Nossa Senhora Do Perpétuo Socorro">Paróquia Nossa Senhora Do Perpétuo Socorro</option>
+        <option value="2">Paróquia São João Batista</option>
+        <option value="3">Paróquia Santo Antônio</option>
+        <option value="4">Paróquia Santa Cruz</option>
+        </select>
+
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <p>Já tem cadastro? faça <a href="/login">Login aqui</a></p>
 </body>
+
 </html>

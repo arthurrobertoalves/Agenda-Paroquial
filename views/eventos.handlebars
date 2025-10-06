@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="eventos.css">
+</head>
+<body>
+<div class="eventos-container">
+    
+    <h1>
+        <strong>Agenda Paroquial de Eventos</strong>
+    </h1>
+
+    <div class="eventos-lista">
+        <h2>Próximos Eventos</h2>
+        
+        {{#if eventos}}
+            {{#each eventos}}
+            <div class="evento-card">
+                <h3>{{this.titulo}}</h3>
+                <p class="evento-data">Data: <strong>{{this.data}}</strong></p> 
+                <p class="evento-descricao">{{this.descricao}}</p>
+            </div>
+            {{/each}}
+        {{else}}
+            <p class="sem-eventos">Nenhum evento agendado até o momento.</p>
+        {{/if}}
+
+        {{#if erro}}
+            <p class="erro-conexao">{{erro}}</p>
+        {{/if}}
+    </div>
+
+</div>
+</body>
+</html>

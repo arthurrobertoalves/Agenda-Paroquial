@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cadastro.css">
+</head>
+<body>
+    <h1>
+        <strong>
+            Login
+        </strong>
+    </h1>
+
+    <form action="/login" method="POST"> 
+        <input type="text" name="usuarios" placeholder="Nome de Usuário" required>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+    
+    <p>Não tem cadastro? <a href="/cadastro">Cadastre-se aqui</a></p>
+</body> 
+</html>
